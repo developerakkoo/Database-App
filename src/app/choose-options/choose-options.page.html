@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Hello, AnikMore!</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-grid fixed>
+  <ion-row>
+    <ion-col sizeLg="6" offsetLg="3">
+      <ion-text color="primary" class="ion-text-center">
+        <h1>Welcome to our Server.</h1>
+      </ion-text>
+      <ion-button expand="full" (click)="onUpload()">
+        <ion-icon slot="end" name="cloud-upload"></ion-icon>
+        UPLOAD
+      </ion-button>
+      <ion-button expand="full" (click)="onDownload()">
+        <ion-icon slot="end" name="cloud-download"></ion-icon>
+        DOWNLOAD
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+</ion-content>
