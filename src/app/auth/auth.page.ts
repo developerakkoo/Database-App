@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { AlertController, LoadingController } from '@ionic/angular';
 
 @Component({
@@ -62,7 +63,23 @@ export class AuthPage implements OnInit {
     })
 
     await loading.present();
+    let body = {
+      host: this.serverName,
+      user: this.userName,
+      password: this.serverPassword || ""
+    }
+    this.http.post("http://localhost:3000/connection", body).subscribe(async (data)=>{
+      console.log(data);
+      await loading.dismiss();
     this.presentAlertConfirm("The Verification is Successfull", "Verification Success!", true);
+      
+    }, async(error) =>{
+      console.log(error);
+      await loading.dismiss();
+
+    this.presentAlertConfirm("The Verification is Unsuccessfull", "Verification Error!", false);
+      
+    })
 
   }
 

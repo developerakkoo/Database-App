@@ -12,20 +12,36 @@
         <ion-col sizeLg="6" offsetLg="3">
           <ion-item>
             <ion-label>Select Database</ion-label>
-            <ion-select multiple="false" placeholder="Select Database">
-              <ion-select-option *ngFor="let db of databases" [value]="db.id">{{db.name}}</ion-select-option>
+            <ion-select (ionChange)="DatabaseSelectEvent($event)" multiple="false" placeholder="Select Database">
+              <ion-select-option *ngFor="let db of databases" [value]="db.id">{{db.Database}}</ion-select-option>
             </ion-select>
           </ion-item>
           <ion-item>
             <ion-label>Select Table or View</ion-label>
-            <ion-select value="table" multiple="false" placeholder="Select Table or View">
+            <ion-select (ionChange)="tableViewSelectEvent($event)" value="table" multiple="false" placeholder="Select Table or View">
+              <ion-select-option *ngFor="let t of tables" [value]="t"> {{t}} </ion-select-option>
+              
+            </ion-select>
+          </ion-item>
+
+          <ion-item *ngIf="isTable">
+            <ion-label>Select Table</ion-label>
+            <ion-select (ionChange)="tableViewSelectEvent($event)" value="table" multiple="false" placeholder="Select Table or View">
+              <ion-select-option value="table">Table</ion-select-option>
+              <ion-select-option value="view">View</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item *ngIf="!isTable">
+            <ion-label>Select View</ion-label>
+            <ion-select (ionChange)="tableViewSelectEvent($event)" value="table" multiple="false" placeholder="Select Table or View">
               <ion-select-option value="table">Table</ion-select-option>
               <ion-select-option value="view">View</ion-select-option>
             </ion-select>
           </ion-item>
           <ion-item>
             <ion-label>Select File Format</ion-label>
-            <ion-select value="csv" multiple="false" placeholder="Select File Format">
+            <ion-select (ionChange)="fileTypeEvent($event)" value="csv" multiple="false" placeholder="Select File Format">
               <ion-select-option value="csv">CSV</ion-select-option>
               <ion-select-option value="pdf">PDF</ion-select-option>
               <ion-select-option value="TSV">TSV</ion-select-option>
@@ -35,7 +51,7 @@
 
           <ion-item>
             <ion-label>Select Output File Separator</ion-label>
-            <ion-select value="," multiple="false" placeholder="Select Output File Separator">
+            <ion-select (ionChange)="seperatorTypeEvent($event)" value="," multiple="false" placeholder="Select Output File Separator">
               <ion-select-option value=",">,</ion-select-option>
               <ion-select-option value="|">|</ion-select-option>
             </ion-select>
@@ -43,6 +59,8 @@
           <ion-button (click)="onDownload()" expand="block" size="large" shape="round">
             DOWNLOAD
           </ion-button>
+
+          <a style="border:1px solid black;" [href]="downloadUrl" download>DOWNLOAD</a>
         </ion-col>
       </ion-row>
     </ion-grid>
