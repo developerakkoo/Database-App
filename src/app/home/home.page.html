@@ -16,35 +16,37 @@
               <ion-select-option *ngFor="let db of databases" [value]="db.id">{{db.Database}}</ion-select-option>
             </ion-select>
           </ion-item>
-          <ion-item>
-            <ion-label>Select Table or View</ion-label>
-            <ion-select (ionChange)="tableViewSelectEvent($event)" value="table" multiple="false" placeholder="Select Table or View">
-              <ion-select-option *ngFor="let t of tables" [value]="t"> {{t}} </ion-select-option>
-              
-            </ion-select>
-          </ion-item>
-
-          <ion-item *ngIf="isTable">
-            <ion-label>Select Table</ion-label>
-            <ion-select (ionChange)="tableViewSelectEvent($event)" value="table" multiple="false" placeholder="Select Table or View">
-              <ion-select-option value="table">Table</ion-select-option>
-              <ion-select-option value="view">View</ion-select-option>
-            </ion-select>
-          </ion-item>
-
-          <ion-item *ngIf="!isTable">
+         
+          <ion-item >
             <ion-label>Select View</ion-label>
             <ion-select (ionChange)="tableViewSelectEvent($event)" value="table" multiple="false" placeholder="Select Table or View">
               <ion-select-option value="table">Table</ion-select-option>
               <ion-select-option value="view">View</ion-select-option>
             </ion-select>
           </ion-item>
+          <ion-item >
+            <ion-label>Select Count</ion-label>
+            <ion-select (ionChange)="singleOrMultipleEvent($event)" value="table" multiple="false" placeholder="Select Table or View">
+              <ion-select-option value="single">Single</ion-select-option>
+              <ion-select-option value="multiple">Multiple</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item *ngIf="isTable">
+            <ion-label>Select Table</ion-label>
+            <ion-select (ionChange)="tableSelectEvent($event)" value="table" multiple="true" placeholder="Select Table or View">
+              <ion-select-option *ngFor="let t of tables" [value]="t"> {{t}} </ion-select-option>
+              
+            </ion-select>
+          </ion-item>
+         
+         
           <ion-item>
             <ion-label>Select File Format</ion-label>
-            <ion-select (ionChange)="fileTypeEvent($event)" value="csv" multiple="false" placeholder="Select File Format">
+            <ion-select (ionChange)="fileTypeEvent($event)" [value]="selectedFileType" multiple="false" placeholder="Select File Format">
               <ion-select-option value="csv">CSV</ion-select-option>
-              <ion-select-option value="pdf">PDF</ion-select-option>
-              <ion-select-option value="TSV">TSV</ion-select-option>
+              <ion-select-option value="xls">Excel</ion-select-option>
+              <ion-select-option value="tsv">TSV</ion-select-option>
               <ion-select-option value="json">JSON</ion-select-option>
             </ion-select>
           </ion-item>
@@ -56,11 +58,14 @@
               <ion-select-option value="|">|</ion-select-option>
             </ion-select>
           </ion-item>
-          <ion-button (click)="onDownload()" expand="block" size="large" shape="round">
+          <ion-button *ngIf="!isUrlSet" (click)="onDownload()" expand="block" size="large" shape="round">
+            DOWNLOAD
+          </ion-button>
+          <ion-button *ngIf="isUrlSet" (click)="btn.click()" expand="block" size="large" shape="round">
             DOWNLOAD
           </ion-button>
 
-          <a style="border:1px solid black;" [href]="downloadUrl" download>DOWNLOAD</a>
+          <a #btn hidden id="download" style="border:1px solid black;"  download>DOWNLOAD</a>
         </ion-col>
       </ion-row>
     </ion-grid>
