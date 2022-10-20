@@ -162,8 +162,12 @@ export class HomePage {
           for(let i =0; i<= file['filePaths'].length - 1; i++){
             console.log(file['filePaths'][i].split('/').splice(1).join('/'));
             this.downloadUrl = `http://localhost:3000/static/${file['filePaths'][i].split('/').splice(1).join('/')}`;
-            let a = document.getElementById("download");
+            let a = document.createElement("a");
+
             a.setAttribute("href", this.downloadUrl);
+            console.log(a);
+            a.download = file['filePaths'][i].split('/').splice(1).join('/');
+            a.click();
             this.isUrlSet = true;
             this.btn.nativeElement.click();
           }
